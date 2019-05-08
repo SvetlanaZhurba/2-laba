@@ -4,12 +4,12 @@ class queue
 {
 private:
   node *end;
-  int cnt;
 public:
   queue();
   ~queue();
   void show();
-  node* operator = ( queue &q );
+  queue& operator = ( int &a );
+  queue& operator = ( queue &q );
   queue& operator + ( queue &q );
   queue& operator * ( queue &q );
   queue& operator / ( int n );
