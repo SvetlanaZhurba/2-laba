@@ -9,7 +9,7 @@ private:
 public:
   time();
   ~time();
-  explicit time( int h, int m, int s );
+  explicit time( int h, int m = 0, int s = 0 );
   int gethour();
   int getmin();
   int getsec();
