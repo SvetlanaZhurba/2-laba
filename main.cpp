@@ -16,7 +16,7 @@ int main()
 
   if( c == 1 )
   {
-    time t;
+    time t( 24 );
     int choice;
   
     do
@@ -24,7 +24,7 @@ int main()
       system( "cls" );
       cout << "Настоящее время: " << t.gethour() << ":" << t.getmin() << ":" << t.getsec() << endl << endl;
       cout << "Выберите действие:\n1. Увеличить выбранный показатель на единицу.\n2. Уменьшить выбранный показатель на единицу."
-      << "\n3. Увеличить выбранный показатель на ваше значение.\n4. Уменьшить выбранный показатель на ваше значение.\nВаш выбор: ";
+      << "\n3. Увеличить выбранный показатель на ваше значение.\n4. Уменьшить выбранный показатель на ваше значение.\n0. Выход.\nВаш выбор: ";
       cin >> choice;
       cin.ignore( 1, '\n' );
 
@@ -50,21 +50,25 @@ int main()
   }
   else
   {
-    queue q1, q2;
+    queue q1, q2, q3;
     int choice, flag;
     int elem;
-    node* p;
+    int *p = new int;
 
     do
     {
       system( "cls" );
       cout << "Выберите действие:\n1. Добавить элемент в очередь.\n2. Извлечь элемент из очереди.\n3. Сложение двух очередей.\n";
-      cout << "4. Вычитание очередей.\n5. Перемножение очередей.\n6. Деление очереди на число.\n0. Выход." << endl;
+      cout << "4. Вычитание очередей.\n5. Перемножение очередей.\n6. Деление очереди на число.\n0. Выход.\nВаш выбор: " << endl;
       cin >> choice;
       cin.ignore( 1, '\n' );
-      cout << "Выберите очередь для работы: ";
-      cin >> flag;
-      cin.ignore( 1, '\n' );
+
+      if( choice != 3 && choice != 4 && choice != 5 && choice != 0 )
+      {
+        cout << "Выберите очередь для работы: ";
+        cin >> flag;
+        cin.ignore( 1, '\n' );
+      }
 
       switch( choice )
       {
@@ -80,19 +84,22 @@ int main()
         break;
 
       case 2:
-        //p = q1;
+        if( flag == 1 )
+          q1 = *p;
+        else
+          q2 = *p;
         break;
 
       case 3:
-        q1 + q2;
+        q3 = q1 + q2;
         break;
 
       case 4:
-        q1 - q2;
+        q3 = q1 - q2;
         break;
 
       case 5:
-        q1 * q2;
+        q3 = q1 * q2;
         break;
 
       case 6:
@@ -101,9 +108,9 @@ int main()
         cin.ignore( 1,'\n' );
 
         if( flag == 1 )
-          q1 / elem;
+          q3 = q1 / elem;
         else
-          q2 / elem;
+          q3 = q2 / elem;
         break;
       }
       
