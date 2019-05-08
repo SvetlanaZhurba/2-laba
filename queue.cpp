@@ -7,7 +7,6 @@ using namespace std;
 queue::queue()
 {
   end = nullptr;
-  cnt = 0;
 }
 
 queue::~queue()
@@ -39,10 +38,10 @@ void queue::show()
   cout << "Начало очереди" << endl;
 }
 
-node* node::operator = ( queue &q )
+queue& queue::operator = ( int &a )
 {
   setlocale( LC_ALL, "Rus" );
-  node *ptr = q.end;
+  node *ptr = end;
 
   if( ptr != nullptr )
     while( ptr->getprev() != nullptr && ptr->getprev()->getprev() != nullptr )
@@ -51,29 +50,58 @@ node* node::operator = ( queue &q )
   if( ptr != nullptr && ptr->getprev() != nullptr )
   {
     cout << endl << "Вы извлекли: " << ptr->getprev()->getval() << endl;
+    a = ptr->getprev()->getval();
     delete ptr->getprev();
     ptr->setprev( nullptr );
-    return ptr;
   }
   else if( ptr != nullptr && ptr->getprev() == nullptr )
   {
     cout << endl << "Вы извлекли: " << ptr->getval() << endl;
+    a = ptr->getval();
     delete end;
     end = nullptr;
-    return ptr;
   }
   else
     cout << endl << "Очередь пуста" << endl;
 
-  q.show();
-  return nullptr;
+  return *this;
+}
+
+queue& queue::operator = ( queue &q )
+{
+  node *p1 = end;
+  node *p2 = q.end;
+
+  if( end == nullptr )
+  {
+    end = new node;
+    p1 = end;
+  }
+
+  while( p2 )
+  {
+    p1->setval( p2->getval() );
+    p2 = p2->getprev();
+    if( p2 != nullptr )
+    {
+      p1->setprev( new node );
+      p1 = p1->getprev();
+    }
+    else
+      p1->setprev( nullptr );
+  }
+
+  return *this;
 }
 
 queue& queue::operator + ( queue &q )
 {
   node *p1 = end;
   node *p2 = q.end;
-
+  queue *qr = new queue;
+  qr->end = new node;
+  node *p = qr->end;
+  
   show();
   cout << "------------------" << endl;
   q.show();
@@ -81,20 +109,30 @@ queue& queue::operator + ( queue &q )
 
   while( p1 != nullptr && p2 != nullptr )
   {
-    p1->setval( p1->getval() + p2->getval() );
+    p->setval( p1->getval() + p2->getval() );
     p1 = p1->getprev();
     p2 = p2->getprev();
+    if( p1 != nullptr && p2 != nullptr )
+    {
+      p->setprev( new node );
+      p = p->getprev();
+    }
+    else
+      p->setprev( nullptr );
   }
 
-  show();
-  return *this;
+  qr->show();
+  return *qr;
 }
 
 queue& queue::operator * ( queue &q )
 {
   node *p1 = end;
   node *p2 = q.end;
-
+  queue *qr = new queue;
+  qr->end = new node;
+  node *p = qr->end;
+  
   show();
   cout << "------------------" << endl;
   q.show();
@@ -102,37 +140,57 @@ queue& queue::operator * ( queue &q )
 
   while( p1 != nullptr && p2 != nullptr )
   {
-    p1->setval( p1->getval() * p2->getval() );
+    p->setval( p1->getval() * p2->getval() );
     p1 = p1->getprev();
     p2 = p2->getprev();
+    if( p1 != nullptr && p2 != nullptr )
+    {
+      p->setprev( new node );
+      p = p->getprev();
+    }
+    else
+      p->setprev( nullptr );
   }
 
-  show();
-  return *this;
+  qr->show();
+  return *qr;
 }
 
 queue& queue::operator / ( int n )
 {
   node *p1 = end;
-
+  queue *qr = new queue;
+  qr->end = new node;
+  node *p = qr->end;
+  
   show();
   cout << "------------------" << endl;
-  
+
   while( p1 != nullptr )
   {
-    p1->setval( p1->getval() / n );
+    p->setval( p1->getval() / n );
     p1 = p1->getprev();
+    if( p1 != nullptr )
+    {
+      p->setprev( new node );
+      p = p->getprev();
+    }
+    else
+      p->setprev( nullptr );
   }
 
-  show();
-  return *this;
+  qr->show();
+  return *qr;
 }
 
 queue& operator - ( queue &q1, queue &q2 )
 {
   node *p1 = q1.end;
   node *p2 = q2.end;
-
+  queue *qr = new queue;
+  qr->end = new node;
+  node *p = qr->end;
+  
   q1.show();
   cout << "------------------" << endl;
   q2.show();
@@ -140,13 +198,20 @@ queue& operator - ( queue &q1, queue &q2 )
 
   while( p1 != nullptr && p2 != nullptr )
   {
-    p1->setval( p1->getval() - p2->getval() );
+    p->setval( p1->getval() - p2->getval() );
     p1 = p1->getprev();
     p2 = p2->getprev();
+    if( p1 != nullptr && p2 != nullptr )
+    {
+      p->setprev( new node );
+      p = p->getprev();
+    }
+    else
+      p->setprev( nullptr );
   }
 
-  q1.show();
-  return q1;
+  qr->show();
+  return *qr;
 }
 
 queue& operator += ( queue &q1, int n )
@@ -164,7 +229,6 @@ queue& operator += ( queue &q1, int n )
     ptr->setval( n );
     q1.end = ptr;
   }
-  q1.cnt++;
 
   q1.show();
   return q1;
