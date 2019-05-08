@@ -12,9 +12,9 @@ time::~time()
 
 time::time( int h, int m, int s )
 {
-  hour = h;
-  min = m;
-  sec = s;
+  hour = h % 24;
+  min = m % 24;
+  sec = s % 24;
 }
 
 int time::gethour()
