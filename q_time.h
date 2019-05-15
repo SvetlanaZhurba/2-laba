@@ -13,6 +13,7 @@ public:
   int gethour();
   int getmin();
   int getsec();
+  time operator= ( time &ob );
   friend time& operator++ ( time &ob );
   friend time& operator-- ( time &ob );
   time operator++ ( int );
