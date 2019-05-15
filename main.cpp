@@ -16,13 +16,14 @@ int main()
 
   if( c == 1 )
   {
-    time t( 24 );
+    time t, t2;
     int choice;
   
     do
     {
       system( "cls" );
-      cout << "Настоящее время: " << t.gethour() << ":" << t.getmin() << ":" << t.getsec() << endl << endl;
+      cout << "Настоящее время (1): " << t.gethour() << ":" << t.getmin() << ":" << t.getsec() << endl;
+      cout << "Настоящее время (2): " << t2.gethour() << ":" << t2.getmin() << ":" << t2.getsec() << endl << endl;
       cout << "Выберите действие:\n1. Увеличить выбранный показатель на единицу.\n2. Уменьшить выбранный показатель на единицу."
       << "\n3. Увеличить выбранный показатель на ваше значение.\n4. Уменьшить выбранный показатель на ваше значение.\n0. Выход.\nВаш выбор: ";
       cin >> choice;
@@ -31,19 +32,19 @@ int main()
       switch( choice )
       {
       case 1:
-        ++t;
+        t2 = ++t;
         break;
 
       case 2:
-        --t;
+        t2 = --t;
         break;
 
       case 3:
-        t++;
+        t2 = t++;
         break;
 
       case 4:
-        t--;
+        t2 = t--;
         break;
       }
     } while( choice != 0 );
