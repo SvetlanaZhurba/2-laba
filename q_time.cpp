@@ -32,6 +32,15 @@ int time::getsec()
   return sec;
 }
 
+time time::operator= ( time &ob )
+{
+  hour = ob.hour;
+  min = ob.min;
+  sec = ob.sec;
+
+  return *this;
+}
+
 time& operator++ ( time &ob )
 {
   setlocale( LC_ALL, "Rus" );
